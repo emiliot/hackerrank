@@ -15,22 +15,22 @@ public class Anagram {
                 continue;
             }
 
-            String a = next.substring(0, next.length() / 2)
-                    .chars().sorted()
-                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                    .toString();
-            String b = next.substring(next.length() / 2, next.length())
-                    .chars().sorted()
-                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                    .toString();
+            String a = next.substring(0, next.length() / 2);
+            String b = next.substring(next.length() / 2, next.length());
 
             int res = 0;
-            int markA[] = new int[26];
-            int markB[] = new int[26];
+            int mark[] = new int[26];
+            for(int i=0; i<b.length(); ++i){
+                mark[b.charAt(i)-'a']++;
+            }
 
-            for(int i=0, n=a.length(); i<n; ++i){
-                markA[a.charAt(i) - 'a']++;
-                markB[b.charAt(i) - 'a']++;
+            for(int i=0; i<a.length(); ++i){
+                mark[a.charAt(i)-'a']--;
+            }
+
+            for(int i=0; i<26; ++i){
+                if(mark[i] > 0)
+                    res += mark[i];
             }
 
             System.out.println(res);
