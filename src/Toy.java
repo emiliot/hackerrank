@@ -1,28 +1,60 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by emiliot on 4/11/16.
  */
-class obj{
-    public String bar;
-    public obj(String bar){
-        this.bar = bar;
-    }
-}
 
 class test{
-    private final obj foo = new obj("Hello");
+    private int a;
 
-    public test(){
-        foo.bar = "World";
+    public test(int a){ this.a = a; }
+
+    public int getA() {
+        return a;
     }
 
-    public String getBar(){
-        return foo.bar;
+    public void setA(int x){
+        this.a  = x;
     }
 }
 
 public class Toy {
+    public static void check(test x){
+        x.setA(100);
+        System.out.println(x.getA());
+    }
+
     public static void main(String args[]){
-        test t = new test();
-        System.out.println(t.getBar());
+        test list[] = new test[20];
+        for(int i=19; i>=0; --i){
+            list[20 - i - 1] = new test(i);
+        }
+
+        Arrays.sort(list, Comparator.comparing(test::getA));
+
+
+        for(int i=0; i<20; ++i){
+            System.out.print(list[i].getA() + " ");
+        }
+
+        List<test> list2 = new LinkedList<>();
+        for(int i=19; i>=0; --i){
+            list2.add(new test(i));
+        }
+        System.out.println("");
+        Collections.sort(list2, Comparator.comparing(test::getA));
+
+        for (test next:
+             list2) {
+            System.out.print(next.getA() + " ");
+        }
+
+        test a = new test(99);
+        check(a);
+        System.out.println(a.getA());
     }
 }
